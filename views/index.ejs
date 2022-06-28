@@ -1,0 +1,206 @@
+
+<%- include('header.ejs') %>
+<%- include('nav.ejs') %>
+   
+    
+    <!-- =============== Conteúdo ================== -->
+    <div class="container mt-5 pt-5">
+        <header>
+            <h1>Books Online
+                <small>Market Place de Livros </small> </h1>
+            <h3 class="font-weight-bold"><%=promo%></h3>
+            <% if(promo) { %>
+            <p>Compre agora o novo livro <b><%=livro[0].titulo%></b></p> 
+                <% } %>
+           
+        </header>
+        <div>
+            <h5>Confira outros títulos <% if(teste != "undefined"){<b><%=teste%></b>}%></h5>
+            <ul>
+            <% livro.forEach((item,n)=>{ 
+                if (n>0){
+            %>
+                <li><%=n%> - <%=item.titulo%> -  <%=item.genero%> - <%=item.nome%> </li>
+            <% }
+        }) %>
+            </ul>
+        </div>
+        
+        <!-- =============== Produtos ================== -->
+        <div class="row">
+           
+        <!-- Início da Iteração -->
+        <% galeria.forEach((item)=>{ %>
+            <div class="col-md-16 col-sm-16 col-lg-3 livro">
+                <div class="card">
+                    <a href="/single-produto?id=<%=item.livros_id%>">
+                    <img class="card-img-top" src="books/<%=item.imagem%>" alt="Card image cap">
+                    </a>
+                    <div class="card-body">
+                        <h4 class="card-title"><%=item.titulo%></h4>
+                        <p class="card-text"><%=item.resumo%></p>
+                        <h2>R$ <%=item.valor%></h2>
+                       <button data-id="<%=item.livros_id%>" data-produto="<%=item.titulo%>"
+                        data-valor="<%=item.valor%>"
+                        class="btn btn-primary bt-carrinho">Adicionar ao carrinho</button>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+        <!-- Fim do bloco da Iteração -->
+        </div>
+        <!-- =============== Fim dos Produtos ================== -->
+
+        <!-- =============== Paginação ================== -->
+        <nav>
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">2</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">3</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- =============== Fim da Paginação ================== -->
+    </div>
+    <!-- =============== Fim do Conteúdo ================== -->
+<!--<script src="js/controle.js"></script>-->
+<script>
+  $().ready(function(){
+        console.log("Jquery funfando...")
+        $('.bt-carrinho').click(function(){
+
+            let dataid=$(this).attr('data-id')
+            let dataProduto=$(this).attr('data-produto')
+            let dataValor=$(this).attr('data-valor')
+
+            $.post("/carrinho",
+            {
+                livros_id:dataid,
+                produto:dataProduto,
+                qtd:1,
+                valor:dataValor
+            },
+            function(data,status)
+            {
+                location.href='/carrinho'
+            },'json')
+        })
+    })
+</script>
+<%- include('footer.ejs') %>
+
+
+<footer class="text-white text-center mt-5" id="footer">
+    <p class="text-center"> &copy; 2022 - Projeto Videos - Outliers</p>
+    <a href="../html/faq.html" target="_blank"><img src="../imagens/faq.png" alt=""></a>
+</footer>
+
+
+
+
+trailer0 = [
+'https://www.youtube.com/embed/oQMc7Sq36mI',
+'https://www.youtube.com/embed/SCv70SAhuE4',
+'https://www.youtube.com/embed/d2M5ObsKw4Y',
+'https://www.youtube.com/embed/2GwMMUfOF9g',
+'https://www.youtube.com/embed/Nq5AzqV8iHg',
+'https://www.youtube.com/embed/pVcMsjyKlaM',
+'https://www.youtube.com/embed/IHS99AeecB8',
+'https://www.youtube.com/embed/YeQoQNZq7wg'
+]
+
+
+trailer1 = [
+'https://www.youtube.com/embed/XNSqIEctTgc',
+'https://www.youtube.com/embed/cubK6qULkfM',
+'https://www.youtube.com/embed/IW9V_S-zWRY',
+'https://www.youtube.com/embed/I3CpaqCK9B0',
+'https://www.youtube.com/embed/elKdcx9ar3k',
+'https://www.youtube.com/embed/iRh2kF-1X2E',
+]
+
+trailer2 = [
+'https://www.youtube.com/embed/_TWo_iCrJQ8',
+'https://www.youtube.com/embed/ViyvmZreWyc',
+'https://www.youtube.com/embed/kULcXm9V7aY',
+'https://www.youtube.com/embed/AD5cvVk-4Ps',
+'https://www.youtube.com/embed/TVxfkdI2xzc',
+'https://www.youtube.com/embed/zwhzHG2RTc8',
+'https://www.youtube.com/embed/47r8FXYZWNU']
+
+function trocaTrailer(){
+    tr0 = trailer0
+    tr1= trailer1
+    tr2 = trailer2
+    let trailerCab1 = document.querySelector('#trailerCab1').src = tr0 [Math.floor(Math.random() * trailer0.length)]
+    let trailerCab2 = document.querySelector('#trailerCab2').src = tr1 [Math.floor(Math.random() * trailer1.length)]
+    let trailerCab3 = document.querySelector('#trailerCab3').src = tr2 [Math.floor(Math.random() * trailer2.length)]
+
+}
+
+
+//exibe os vídeos ao carregar a página
+    trocaTrailer()
+
+
+// Titulo e imagem em LocalStorage
+var filme1 = document.querySelector('#filme1').innerHTML = 'A Hora do Rush'
+var filme2 = document.querySelector('#filme2').innerHTML = 'Shrek'
+var filme3 = document.querySelector('#filme3').innerHTML = 'Homem Aranha: Sem Volta para Casa'
+var filme4 = document.querySelector('#filme4').innerHTML = 'Em defesa de Cristo'
+var filme5 = document.querySelector('#filme5').innerHTML = 'A Freira'
+var filme6 = document.querySelector('#filme6').innerHTML = 'Corra'
+
+
+//Salva em localStorage
+    function local(titulo,url) {
+        this._titulo = titulo
+        this._url = url
+        localStorage.setItem(_titulo,_url)
+    }
+
+
+    // const desordenar = (arr) => {
+    //     const copia = [...arr];
+      
+    //     for (let i = copia.length - 1; i > 0; i--) {
+    //       let j = Math.floor(Math.random() * (i + 1));
+    //       [copia[i], copia[j]] = [copia[j], copia[i]];
+    //     }
+        
+    //     return copia;
+    //   };
+      
+    //   const desordenado = desordenar([
+    //   'https://www.youtube.com/embed/oQMc7Sq36mI',
+    //   'https://www.youtube.com/embed/SCv70SAhuE4',
+    //   'https://www.youtube.com/embed/d2M5ObsKw4Y',
+    //   'https://www.youtube.com/embed/2GwMMUfOF9g',
+    //   'https://www.youtube.com/embed/Nq5AzqV8iHg',
+    //   'https://www.youtube.com/embed/pVcMsjyKlaM',
+    //   'https://www.youtube.com/embed/IHS99AeecB8',
+    //   'https://www.youtube.com/embed/YeQoQNZq7wg',
+    //   'https://www.youtube.com/embed/iRh2kF-1X2E',
+    //   'https://www.youtube.com/embed/elKdcx9ar3k'
+    // ])
+
+    //    document.querySelector('#trailerCab1').src = (desordenado.shift())
+    //    document.querySelector('#trailerCab2').src = (desordenado.shift())
+    //    document.querySelector('#trailerCab3').src = (desordenado.shift())
